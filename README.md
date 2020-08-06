@@ -3,16 +3,49 @@
 [![StyleCI](https://github.styleci.io/repos/285442080/shield?branch=master)](https://github.styleci.io/repos/285442080?branch=master)
 [![Build Status](https://travis-ci.org/baraveli/bml-ocr.svg?branch=master)](https://travis-ci.org/baraveli/bml-ocr)
 
-BML Transaction Receipt OCR based on Tesseract OCR. 
+BML Transaction Receipt OCR based on Tesseract OCR.
 At the moment this uses string replacement but ideally, the regex will work better in this case so we will be switching on the next version.
 
 Would not recommend to use in production.
 
 ## Installation
 
+Via [Composer][]:
+
 ```
 composer require baraveli/bml-ocr
 ```
+
+:bangbang: **This library depends on [Tesseract OCR][], version _3.02_ or later.**
+
+<br/>
+
+### ![][windows_icon] Note for Windows users
+
+There are [many ways][tesseract_installation_on_windows] to install
+[Tesseract OCR][] on your system, but if you just want something quick to
+get up and running, I recommend installing the [Capture2Text][] package with
+[Chocolatey][].
+
+    choco install capture2text --version 3.9
+
+:warning: Recent versions of [Capture2Text][] stopped shipping the `tesseract` binary.
+
+<br/>
+
+### ![][macos_icon] Note for macOS users
+
+With [MacPorts][] you can install support for individual languages, like so:
+
+    $ sudo port install tesseract-<langcode>
+
+But that is not possible with [Homebrew][]. It comes only with **English** support
+by default, so if you intend to use it for other language, the quickest solution
+is to install them all:
+
+    $ brew install tesseract --with-all-languages
+
+<br/>
 
 ## Usage
 
