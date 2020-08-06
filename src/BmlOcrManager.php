@@ -2,9 +2,8 @@
 
 namespace Baraveli\BmlOcr;
 
-use thiagoalessio\TesseractOCR\TesseractOCR;
 use Intervention\Image\ImageManagerStatic as Image;
-use Baraveli\BmlOcr\Invoice;
+use thiagoalessio\TesseractOCR\TesseractOCR;
 
 class BmlOcrManager
 {
@@ -13,7 +12,7 @@ class BmlOcrManager
 
     public function make(string $imagepath)
     {
-        $this->hashedImage = md5($imagepath) . '.jpg';
+        $this->hashedImage = md5($imagepath).'.jpg';
         $this->sharpenImage($imagepath);
 
         return $this;
@@ -38,12 +37,13 @@ class BmlOcrManager
     {
         Image::make($imagepath)
             ->sharpen(25)
-            ->save($this->temporaryDirectory ? $this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage : $this->hashedImage);
+            ->save($this->temporaryDirectory ? $this->temporaryDirectory.DIRECTORY_SEPARATOR.$this->hashedImage : $this->hashedImage);
     }
 
     protected function filter(string $text): Invoice
     {
         $result = array_values(array_filter(explode("\n", $text)));
+
         return new Invoice($result);
     }
 }
