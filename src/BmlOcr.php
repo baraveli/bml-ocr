@@ -4,9 +4,9 @@ namespace Baraveli\BmlOcr;
 
 class BmlOcr
 {
-    public static function make(string $imagepath)
+    public static function make(string $imagepath, string $temporaryDirectory = __DIR__)
     {
-        return self::getManager()->make($imagepath);
+        return self::getManager()->make($imagepath, $temporaryDirectory);
     }
 
     /**
