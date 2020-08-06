@@ -1,6 +1,7 @@
 # BML OCR:camera: (Experimental)
 
 [![StyleCI](https://github.styleci.io/repos/285442080/shield?branch=master)](https://github.styleci.io/repos/285442080?branch=master)
+[![Build Status](https://travis-ci.org/baraveli/bml-ocr.svg?branch=master)](https://travis-ci.org/baraveli/bml-ocr)
 
 BML Transaction Receipt OCR based on Tesseract OCR. 
 At the moment this uses string replacement but ideally, the regex will work better in this case so we will be switching on the next version.
