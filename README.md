@@ -1,4 +1,4 @@
-# BML OCR (Experimental)
+# BML OCR:camera: (Experimental)
 
 BML Transaction Receipt OCR based on Tesseract OCR. 
 At the moment this uses string replacement but ideally, the regex will work better in this case so we will be switching on the next version.
