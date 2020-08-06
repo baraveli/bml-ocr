@@ -59,7 +59,7 @@ class BmlOcrManager
     protected function sharpenImage(string $imagepath): void
     {
         Image::make($imagepath)
-            ->sharpen(25)
+            ->sharpen(50)
             ->save($this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage);
     }
 
