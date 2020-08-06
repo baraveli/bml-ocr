@@ -1,0 +1,22 @@
+{
+    "name": "baraveli/bml-ocr",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mohamed jinas",
+            "email": "j@live.mv"
+        }
+    ],
+    "require": {
+        "thiagoalessio/tesseract_ocr": "^2.9",
+        "intervention/image": "^2.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Baraveli\\BmlOcr\\": "src/"
+        }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.1"
+    }
+}
