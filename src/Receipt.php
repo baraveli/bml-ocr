@@ -22,7 +22,7 @@ class Receipt
     protected function hydrate($rawdata): void
     {
         $this->status = str_replace('Status ', '', $rawdata[2]);
-        $this->message = str_replace('Message ', '',$rawdata[3]);
+        $this->message = str_replace('Message ', '', $rawdata[3]);
         $this->reference = str_replace('Ref # ', '', $rawdata[4]);
         $this->date = str_replace('Date ', '', $rawdata[5]);
         $this->from = str_replace('From ', '', $rawdata[6]);
