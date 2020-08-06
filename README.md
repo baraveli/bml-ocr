@@ -75,3 +75,13 @@ $receipt = BmlOcr::make("/home/image/imagename.jpg", __DIR__)
    $receipt->amount; //Returns the amount in receipt.
    $receipt->remarks; //Returns the remarks in receipt.
 ```
+
+[Tesseract OCR]: https://github.com/tesseract-ocr/tesseract
+[Composer]: http://getcomposer.org/
+[windows_icon]: https://thiagoalessio.github.io/tesseract-ocr-for-php/images/windows-18.svg
+[macos_icon]: https://thiagoalessio.github.io/tesseract-ocr-for-php/images/apple-18.svg
+[tesseract_installation_on_windows]: https://github.com/tesseract-ocr/tesseract/wiki#windows
+[Capture2Text]: https://chocolatey.org/packages/capture2text
+[Chocolatey]: https://chocolatey.org
+[MacPorts]: https://www.macports.org
+[Homebrew]: https://brew.sh
