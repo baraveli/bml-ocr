@@ -20,6 +20,20 @@ composer require baraveli/bml-ocr
 
 <br/>
 
+### Note for Linux users
+
+It is pretty simple to install tesseract, run the following commands:
+
+```
+sudo apt install tesseract-ocr
+```
+
+If the default installation doesn't include english language pack. You have to pull that one seperately, run the following command:
+
+```
+sudo apt-get install tesseract-ocr-eng
+```
+
 ### ![][windows_icon] Note for Windows users
 
 There are [many ways][tesseract_installation_on_windows] to install
@@ -76,12 +90,12 @@ $receipt = BmlOcr::make("/home/image/imagename.jpg", __DIR__)
    $receipt->remarks; //Returns the remarks in receipt.
 ```
 
-[Tesseract OCR]: https://github.com/tesseract-ocr/tesseract
-[Composer]: http://getcomposer.org/
+[tesseract ocr]: https://github.com/tesseract-ocr/tesseract
+[composer]: http://getcomposer.org/
 [windows_icon]: https://thiagoalessio.github.io/tesseract-ocr-for-php/images/windows-18.svg
 [macos_icon]: https://thiagoalessio.github.io/tesseract-ocr-for-php/images/apple-18.svg
 [tesseract_installation_on_windows]: https://github.com/tesseract-ocr/tesseract/wiki#windows
-[Capture2Text]: https://chocolatey.org/packages/capture2text
-[Chocolatey]: https://chocolatey.org
-[MacPorts]: https://www.macports.org
-[Homebrew]: https://brew.sh
+[capture2text]: https://chocolatey.org/packages/capture2text
+[chocolatey]: https://chocolatey.org
+[macports]: https://www.macports.org
+[homebrew]: https://brew.sh
