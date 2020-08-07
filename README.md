@@ -90,6 +90,12 @@ $receipt = BmlOcr::make("/home/image/imagename.jpg", __DIR__)
    $receipt->remarks; //Returns the remarks in receipt.
 ```
 
+## TODO
+
+- [ ] Improve the detection
+- [ ] Regular expression matchings
+- [ ] Fix amount,remarks,message detection
+
 [tesseract ocr]: https://github.com/tesseract-ocr/tesseract
 [composer]: http://getcomposer.org/
 [windows_icon]: https://thiagoalessio.github.io/tesseract-ocr-for-php/images/windows-18.svg

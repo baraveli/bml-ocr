@@ -2,6 +2,8 @@
 
 namespace Baraveli\BmlOcr;
 
+use Stringy\Stringy;
+
 class Receipt
 {
     public $status;
@@ -14,21 +16,21 @@ class Receipt
     public $amount;
     public $remarks;
 
-    public function __construct(array $rawdata)
+    public function __construct($rawdata)
     {
-        $this->hydrate($rawdata);
+        $this->sanitize($rawdata);
     }
 
-    protected function hydrate($rawdata): void
+
+    protected function sanitize($rawdata): void
     {
-        $this->status = str_replace('Status ', '', $rawdata[2]);
-        $this->message = str_replace('Message ', '', $rawdata[3]);
-        $this->reference = str_replace('Ref # ', '', $rawdata[4]);
-        $this->date = str_replace('Date ', '', $rawdata[5]);
-        $this->from = str_replace('From ', '', $rawdata[6]);
-        $this->to = str_replace('To ', '', $rawdata[7]);
-        $this->account = (int) $rawdata[8];
-        $this->amount = (int) str_replace('Amount MVR ', '', $rawdata[9]);
-        $this->remarks = str_replace('Remarks ', '', $rawdata[10]);
+        $string = implode("\n", $rawdata);
+
+        $this->status = (string) Stringy::create($string)->between("Status ", "\n");
+        $this->reference = (string) Stringy::create($string)->between("Ref # ", "\n");
+        $this->date = (string) Stringy::create($string)->between("Date ", "\n");
+        $this->from = (string) Stringy::create($string)->between("From ", "\n");
+        $this->to = (string) Stringy::create($string)->between("To ", "\n");
+        $this->amount = (string) Stringy::create($string)->after("Amount MVR ");
     }
 }

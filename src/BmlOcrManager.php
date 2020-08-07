@@ -4,6 +4,7 @@ namespace Baraveli\BmlOcr;
 
 use Intervention\Image\ImageManagerStatic as Image;
 use thiagoalessio\TesseractOCR\TesseractOCR;
+use Illuminate\Support\Str;
 
 class BmlOcrManager
 {
@@ -21,7 +22,7 @@ class BmlOcrManager
     public function make(string $imagepath, string $temporaryDirectory): BmlOcrManager
     {
         $this->temporaryDirectory = $temporaryDirectory;
-        $this->hashedImage = md5($imagepath).'.jpg';
+        $this->hashedImage = md5($imagepath) . '.jpg';
         $this->sharpenImage($imagepath);
 
         return $this;
@@ -32,11 +33,11 @@ class BmlOcrManager
      *
      * @return Receipt
      */
-    public function detect(): Receipt
+    public function detect()
     {
-        $text = (new TesseractOCR($this->temporaryDirectory.DIRECTORY_SEPARATOR.$this->hashedImage))->run();
+        $text = (new TesseractOCR($this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage))->run();
         //Remove the temporary image
-        unlink($this->temporaryDirectory.DIRECTORY_SEPARATOR.$this->hashedImage);
+        unlink($this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage);
 
         return $this->filter($text);
     }
@@ -61,8 +62,12 @@ class BmlOcrManager
     protected function sharpenImage(string $imagepath): void
     {
         Image::make($imagepath)
+            ->crop(930, 1350, 0, 0)
+            ->brightness(-11)
+            ->invert()
+            ->greyscale()
             ->sharpen(25)
-            ->save($this->temporaryDirectory.DIRECTORY_SEPARATOR.$this->hashedImage);
+            ->save($this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage);
     }
 
     /**
@@ -76,6 +81,21 @@ class BmlOcrManager
     {
         $result = array_values(array_filter(explode("\n", $text)));
 
-        return new Receipt($result);
+
+        $trimmedData = collect($result)->filter(function ($item) {
+            return Str::contains($item, [
+                "Transaction Receipt",
+                "Status SUCCESS",
+                "Message Transfer transaction is successful",
+                "Ref #",
+                "Date",
+                "From",
+                "To",
+                "Amount",
+                "77"
+            ]);
+        })->values()->toArray();
+
+        return new Receipt($trimmedData);
     }
 }
