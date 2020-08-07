@@ -9,9 +9,7 @@
     ],
     "require": {
         "thiagoalessio/tesseract_ocr": "^2.9",
-        "intervention/image": "^2.5",
-        "tightenco/collect": "^7.19",
-        "voku/stringy": "^6.3"
+        "intervention/image": "^2.5"
     },
     "autoload": {
         "psr-4": {
