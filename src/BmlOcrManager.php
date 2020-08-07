@@ -21,7 +21,7 @@ class BmlOcrManager
     public function make(string $imagepath, string $temporaryDirectory): BmlOcrManager
     {
         $this->temporaryDirectory = $temporaryDirectory;
-        $this->hashedImage = md5($imagepath) . '.jpg';
+        $this->hashedImage = md5($imagepath).'.jpg';
         $this->sharpenImage($imagepath);
 
         return $this;
@@ -34,10 +34,10 @@ class BmlOcrManager
      */
     public function detect(): array
     {
-        $text = (new TesseractOCR($this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage))
+        $text = (new TesseractOCR($this->temporaryDirectory.DIRECTORY_SEPARATOR.$this->hashedImage))
             ->run();
         //Remove the temporary image
-        unlink($this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage);
+        unlink($this->temporaryDirectory.DIRECTORY_SEPARATOR.$this->hashedImage);
 
         return $this->filter($text);
     }
@@ -65,7 +65,7 @@ class BmlOcrManager
             ->crop(930, 1080, 0, 10)
             ->brightness(-9)
             ->sharpen(80)
-            ->save($this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage);
+            ->save($this->temporaryDirectory.DIRECTORY_SEPARATOR.$this->hashedImage);
     }
 
     /**
