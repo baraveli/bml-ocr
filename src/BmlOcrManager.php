@@ -21,7 +21,7 @@ class BmlOcrManager
     public function make(string $imagepath, string $temporaryDirectory): BmlOcrManager
     {
         $this->temporaryDirectory = $temporaryDirectory;
-        $this->hashedImage = md5($imagepath).'.jpg';
+        $this->hashedImage = md5($imagepath) . '.jpg';
         $this->sharpenImage($imagepath);
 
         return $this;
@@ -30,13 +30,14 @@ class BmlOcrManager
     /**
      * Detect the receipt.
      *
-     * @return Receipt
+     * @return array
      */
-    public function detect(): Receipt
+    public function detect(): array
     {
-        $text = (new TesseractOCR($this->temporaryDirectory.DIRECTORY_SEPARATOR.$this->hashedImage))->run();
+        $text = (new TesseractOCR($this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage))
+            ->run();
         //Remove the temporary image
-        unlink($this->temporaryDirectory.DIRECTORY_SEPARATOR.$this->hashedImage);
+        unlink($this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage);
 
         return $this->filter($text);
     }
@@ -61,8 +62,10 @@ class BmlOcrManager
     protected function sharpenImage(string $imagepath): void
     {
         Image::make($imagepath)
-            ->sharpen(25)
-            ->save($this->temporaryDirectory.DIRECTORY_SEPARATOR.$this->hashedImage);
+            ->crop(930, 1080, 0, 10)
+            ->brightness(-9)
+            ->sharpen(80)
+            ->save($this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage);
     }
 
     /**
@@ -70,12 +73,10 @@ class BmlOcrManager
      *
      * @param mixed $text
      *
-     * @return Receipt
+     * @return array
      */
-    protected function filter(string $text): Receipt
+    protected function filter(string $text): array
     {
-        $result = array_values(array_filter(explode("\n", $text)));
-
-        return new Receipt($result);
+        return array_values(array_filter(explode("\n", $text)));
     }
 }
