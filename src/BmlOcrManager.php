@@ -2,9 +2,9 @@
 
 namespace Baraveli\BmlOcr;
 
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 use thiagoalessio\TesseractOCR\TesseractOCR;
-use Illuminate\Support\Str;
 
 class BmlOcrManager
 {
@@ -22,7 +22,7 @@ class BmlOcrManager
     public function make(string $imagepath, string $temporaryDirectory): BmlOcrManager
     {
         $this->temporaryDirectory = $temporaryDirectory;
-        $this->hashedImage = md5($imagepath) . '.jpg';
+        $this->hashedImage = md5($imagepath).'.jpg';
         $this->sharpenImage($imagepath);
 
         return $this;
@@ -35,9 +35,9 @@ class BmlOcrManager
      */
     public function detect()
     {
-        $text = (new TesseractOCR($this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage))->run();
+        $text = (new TesseractOCR($this->temporaryDirectory.DIRECTORY_SEPARATOR.$this->hashedImage))->run();
         //Remove the temporary image
-        unlink($this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage);
+        unlink($this->temporaryDirectory.DIRECTORY_SEPARATOR.$this->hashedImage);
 
         return $this->filter($text);
     }
@@ -67,7 +67,7 @@ class BmlOcrManager
             ->invert()
             ->greyscale()
             ->sharpen(25)
-            ->save($this->temporaryDirectory . DIRECTORY_SEPARATOR . $this->hashedImage);
+            ->save($this->temporaryDirectory.DIRECTORY_SEPARATOR.$this->hashedImage);
     }
 
     /**
@@ -81,18 +81,17 @@ class BmlOcrManager
     {
         $result = array_values(array_filter(explode("\n", $text)));
 
-
         $trimmedData = collect($result)->filter(function ($item) {
             return Str::contains($item, [
-                "Transaction Receipt",
-                "Status SUCCESS",
-                "Message Transfer transaction is successful",
-                "Ref #",
-                "Date",
-                "From",
-                "To",
-                "Amount",
-                "77"
+                'Transaction Receipt',
+                'Status SUCCESS',
+                'Message Transfer transaction is successful',
+                'Ref #',
+                'Date',
+                'From',
+                'To',
+                'Amount',
+                '77',
             ]);
         })->values()->toArray();
 
